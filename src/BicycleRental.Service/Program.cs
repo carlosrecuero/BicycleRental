@@ -5,12 +5,12 @@ using Microsoft.Extensions.Configuration;
 
 var config = new ConfigurationBuilder()
                  .SetBasePath(Directory.GetCurrentDirectory())
-                 //.AddJsonFile("appsettings.json")
+                 .AddJsonFile("appsettings.json")
                  .Build();
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDaprSidekick(config);
+//builder.Services.AddDaprSidekick(config);
 
 builder
     .Services

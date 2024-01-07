@@ -44,7 +44,7 @@ namespace BicycleRental.Service.Actors
             var state = await this.StateManager.GetOrAddStateAsync<State>(StatusKey, new State());
 
             var rental = state.CurrentRental;
-            if (rental is not null)
+            if (rental is null)
             {
                 throw new InvalidOperationException("Bicycle has not a rental yet");
             }
@@ -52,9 +52,9 @@ namespace BicycleRental.Service.Actors
 
             var price = _rater.CalculatePrice(rental.Duration!.Value);
 
-            var rentalCardActorId = new ActorId(rental.CardId);
-            var rentalCardActor = ActorProxy.Create<IWalletActor>(rentalCardActorId, "CardActor");
-            await rentalCardActor.Withdraw(price);
+            var rentalWalletActorId = new ActorId(rental.CardId);
+            var rentalWalletActor = ActorProxy.Create<IWalletActor>(rentalWalletActorId, "WalletActor");
+            await rentalWalletActor.Withdraw(price);
 
             state.CurrentRental = null;
 
@@ -75,7 +75,7 @@ namespace BicycleRental.Service.Actors
             var state = await this.StateManager.GetOrAddStateAsync<State>(StatusKey, new State());
 
             var rental = state.CurrentRental;
-            if (rental is not null)
+            if (rental is null)
             {
                 throw new InvalidOperationException("Bicycle has not a rental yet");
             }

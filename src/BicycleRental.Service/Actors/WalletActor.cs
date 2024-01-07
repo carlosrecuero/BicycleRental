@@ -34,7 +34,7 @@ namespace BicycleRental.Service.Actors
             var balance = await this.StateManager.GetOrAddStateAsync<decimal>(BalanceKey, defaultBalance);
 
             var updatedBalance = balance + depositAmount;
-            await this.StateManager.SetStateAsync(BalanceKey, balance);
+            await this.StateManager.SetStateAsync(BalanceKey, updatedBalance);
 
             return updatedBalance;
         }
